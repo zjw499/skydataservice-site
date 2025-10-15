@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Contact Us | Sky Data Services</title>
+  <meta name="description" content="Contact Sky Data Services to discuss AI and data solutions for your business.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="images/logo.png">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header role="banner">
+  <nav aria-label="Primary">
+    <div class="logo">
+      <img src="images/logo.png" alt="Sky Data Services logo" loading="lazy">
+      <span>Sky Data Services</span>
+    </div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="integrations.html">Integrations</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" aria-current="page">Contact</a></li>
+    </ul>
+  </nav>
+  </header>
+
+  <main id="main" role="main">
+  <section class="section">
+    <h2>Get in Touch</h2>
+    <p style="max-width:700px; margin:0 auto; color:#475569; text-align:center;">Have questions about our services or want to discuss your next project? Fill out the form below and we'll get back to you shortly.</p>
+    <div class="contact-container" style="margin-top:40px;">
+      <form class="contact-form" id="contact-form">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Your email" required>
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" rows="6" placeholder="How can we help you?" required></textarea>
+
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; <span id="year"></span> Sky Data Services. All rights reserved.</p>
+  </footer>
+  </main>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    (function(){
+      var f=document.getElementById('contact-form');
+      if(!f) return;
+      f.addEventListener('submit', function(e){
+        e.preventDefault();
+        var n=document.getElementById('name').value.trim();
+        var em=document.getElementById('email').value.trim();
+        var m=document.getElementById('message').value.trim();
+        var subject=encodeURIComponent('Website inquiry from ' + (n||'Unknown'));
+        var body=encodeURIComponent('Name: '+n+'\nEmail: '+em+'\n\n'+m);
+        var to='zach@skydataservice.com';
+        window.location.href='mailto:'+to+'?subject='+subject+'&body='+body;
+      });
+    })();
+  </script>
+</body>
+</html>
