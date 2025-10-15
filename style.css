@@ -1,0 +1,233 @@
+/* General Styles */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #1f2937;
+  line-height: 1.6;
+  background-color: #ffffff;
+}
+
+/* Accessibility: Skip link */
+.skip-link{position:absolute;left:-999px;top:auto;width:1px;height:1px;overflow:hidden;}
+.skip-link:focus{left:16px;top:16px;width:auto;height:auto;background:#ffffff;color:#041e42;padding:8px 12px;border-radius:4px;z-index:2000;}
+
+/* Navigation Bar */
+nav {
+  background-color: #041e42;
+  color: #ffffff;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav .logo {
+  display: flex;
+  align-items: center;
+}
+
+nav .logo img {
+  height: 48px;
+  margin-right: 12px;
+}
+
+nav .logo span {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  margin-left: 24px;
+}
+
+nav ul li a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.2s ease;
+}
+
+nav ul li a:hover {
+  color: #a3e635;
+}
+
+/* Hero Section */
+.hero {
+  background-image: url('images/hero.jpg');
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  text-align: center;
+  padding: 160px 20px;
+  position: relative;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 32px;
+}
+
+.btn {
+  background-color: #2b7846;
+  padding: 14px 28px;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover {
+  background-color: #1e5233;
+}
+
+/* Generic Sections */
+.section {
+  padding: 80px 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section h2 {
+  text-align: center;
+  margin-bottom: 40px;
+  color: #041e42;
+  font-size: 2.4rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background-color: #f8fafc;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.card h3 {
+  color: #2b7846;
+  margin-bottom: 16px;
+  font-size: 1.4rem;
+}
+
+.card p {
+  color: #475569;
+  font-size: 1rem;
+}
+
+/* Footer */
+footer {
+  background-color: #041e42;
+  color: #ffffff;
+  text-align: center;
+  padding: 24px 20px;
+}
+
+footer p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* Improve focus visibility */
+:focus-visible{outline:3px solid #a3e635;outline-offset:2px;}
+
+/* Contact Page */
+.contact-container {
+  max-width: 700px;
+  margin: 0 auto;
+  background-color: #f8fafc;
+  padding: 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form label {
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #041e42;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+.contact-form button {
+  background-color: #2b7846;
+  color: #ffffff;
+  padding: 14px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.contact-form button:hover {
+  background-color: #1e5233;
+}
+
+/* Mobile adjustments */
+@media (max-width: 720px){
+  nav{flex-wrap:wrap;}
+  nav .logo span{font-size:1.1rem;}
+  nav ul{width:100%;justify-content:space-around;margin-top:8px;}
+  .hero{padding:120px 16px;}
+  .hero h1{font-size:2.2rem;}
+  .section{padding:56px 16px;}
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce){
+  *{scroll-behavior:auto;animation-duration:0.01ms;animation-iteration-count:1;transition-duration:0.01ms;}
+}
