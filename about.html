@@ -2,63 +2,232 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>About Us | Sky Data Services</title>
-  <meta name="description" content="About Sky Data Services — mission, vision, values, and story.">
+  <title>About Sky Data Services | CRM &amp; Integration Engineering Team</title>
+  <meta name="description" content="Meet the engineering-focused team behind Sky Data Services and our delivery principles for CRM and integration success.">
+  <link rel="canonical" href="https://www.skydataservice.com/about.html">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="About Sky Data Services | CRM &amp; Integration Engineering Team">
+  <meta property="og:description" content="Engineering-first CRM and integration partner for RevOps, Sales Ops, IT, and CTO teams.">
+  <meta property="og:url" content="https://www.skydataservice.com/about.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Manrope:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="images/logo.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "Sky Data Services",
+        "url": "https://www.skydataservice.com",
+        "email": "zach@skydataservice.com"
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://www.skydataservice.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "About",
+            "item": "https://www.skydataservice.com/about.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
-  <header role="banner">
-  <nav aria-label="Primary">
-    <div class="logo">
-      <img src="images/logo.png" alt="Sky Data Services logo" loading="lazy">
-      <span>Sky Data Services</span>
+
+  <header class="site-header" role="banner">
+    <div class="container nav-wrap">
+      <a class="brand" href="index.html" aria-label="Sky Data Services home">
+        <img src="images/logo.png" alt="Sky Data Services logo" width="44" height="44">
+        <span>Sky Data Services</span>
+      </a>
+      <nav class="primary-nav" aria-label="Primary">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="crm-development.html">CRM Development</a></li>
+          <li><a href="integrations.html">Integrations</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="case-studies.html">Case Studies</a></li>
+          <li><a href="about.html" aria-current="page">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <a class="btn btn-primary" href="contact.html#intake-form" data-track="cta_click_primary">Schedule Call</a>
+        <button class="menu-toggle" type="button" aria-controls="mobile-nav" aria-expanded="false" aria-label="Toggle navigation" data-menu-toggle>
+          <span class="menu-toggle-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+        </button>
+      </div>
     </div>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="services.html">Services</a></li>
-      <li><a href="integrations.html">Integrations</a></li>
-      <li><a href="about.html" aria-current="page">About</a></li>
-      <li><a href="contact.html">Contact</a></li>
-    </ul>
-  </nav>
+    <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile" aria-hidden="true">
+      <ul>
+        <li><a href="index.html" data-menu-close>Home</a></li>
+        <li><a href="crm-development.html" data-menu-close>CRM Development</a></li>
+        <li><a href="integrations.html" data-menu-close>Integrations</a></li>
+        <li><a href="services.html" data-menu-close>Services</a></li>
+        <li><a href="case-studies.html" data-menu-close>Case Studies</a></li>
+        <li><a href="about.html" aria-current="page" data-menu-close>About</a></li>
+        <li><a href="contact.html" data-menu-close>Contact</a></li>
+      </ul>
+      <a class="btn btn-primary" href="contact.html#intake-form" data-menu-close>Schedule Call</a>
+    </nav>
   </header>
 
   <main id="main" role="main">
-  <section class="section">
-    <h2>About Sky Data Services</h2>
-    <p style="max-width:800px; margin:0 auto; color:#475569; text-align:center;">Sky Data Services was founded with a simple mission: empower organizations to unlock the full potential of their data. We believe that the future belongs to those who can intelligently integrate, enrich and act on their data to create measurable value.</p>
+    <section class="hero mesh">
+      <div class="container hero-grid">
+        <div class="hero-copy" data-reveal>
+          <span class="eyebrow">About</span>
+          <h1>Engineering-First CRM and Integration Partner</h1>
+          <p>We help revenue teams operate from a reliable system foundation, not spreadsheets and manual workarounds.</p>
+        </div>
+        <aside class="hero-panel" data-reveal data-delay="1">
+          <h3>Delivery principles</h3>
+          <ul class="simple-list">
+            <li>Build for maintainability</li>
+            <li>Secure by default</li>
+            <li>Measure outcomes, not activity</li>
+            <li>Document what we ship</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
 
-    <div class="cards" style="margin-top:40px;">
-      <div class="card">
-        <h3>Our Mission</h3>
-        <p>To deliver innovative and responsible data solutions that help businesses thrive in an AI‑driven world. We combine technical excellence with human insight to enable smarter decisions.</p>
+    <section class="section">
+      <div class="container card-grid cols-3">
+        <article class="card" data-reveal>
+          <h2>Mission</h2>
+          <p>Help revenue teams operate from a reliable system foundation, not spreadsheets and manual workarounds.</p>
+        </article>
+        <article class="card" data-reveal data-delay="1">
+          <h2>Values</h2>
+          <p>Clarity in architecture. Accountability in delivery. Quality in every release.</p>
+        </article>
+        <article class="card" data-reveal data-delay="2">
+          <h2>Why Sky Data Services</h2>
+          <p>Senior practitioners, practical solutions, and execution discipline from discovery to optimization.</p>
+        </article>
       </div>
-      <div class="card">
-        <h3>Our Vision</h3>
-        <p>A world where organizations of every size and industry can harness trusted intelligence to improve outcomes, inspire innovation and create meaningful impact.</p>
+    </section>
+
+    <section class="section compact">
+      <div class="container">
+        <div class="section-header" data-reveal>
+          <h2>Team</h2>
+          <p>Lightweight, senior delivery model with direct collaboration between engineering and business stakeholders.</p>
+        </div>
+        <div class="card-grid cols-3">
+          <article class="card" data-reveal>
+            <h3>Name</h3>
+            <p><strong>Role:</strong> CRM Architect</p>
+            <p><strong>Specialization:</strong> Salesforce / HubSpot implementation strategy</p>
+            <p><strong>Experience:</strong> 10+ years</p>
+          </article>
+          <article class="card" data-reveal data-delay="1">
+            <h3>Name</h3>
+            <p><strong>Role:</strong> Integration Engineer</p>
+            <p><strong>Specialization:</strong> API, middleware, ETL/ELT systems</p>
+            <p><strong>Experience:</strong> 8+ years</p>
+          </article>
+          <article class="card" data-reveal data-delay="2">
+            <h3>Name</h3>
+            <p><strong>Role:</strong> RevOps Automation Lead</p>
+            <p><strong>Specialization:</strong> process design, analytics, change enablement</p>
+            <p><strong>Experience:</strong> 9+ years</p>
+          </article>
+        </div>
       </div>
-      <div class="card">
-        <h3>Our Values</h3>
-        <p>Integrity, curiosity and partnership guide everything we do. We are committed to responsible AI, data privacy and empowering our clients through collaboration and transparency.</p>
+    </section>
+
+    <section class="section compact">
+      <div class="container">
+        <div class="cta-band" data-reveal>
+          <h2>Discuss your current CRM architecture with our team.</h2>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="contact.html#intake-form" data-track="cta_click_primary">Book a Discovery Call</a>
+            <a class="btn btn-secondary" href="case-studies.html" data-track="cta_click_secondary">View Case Studies</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3>Sky Data Services</h3>
+          <p>Engineering-first CRM development and integration delivery for RevOps, Sales Ops, IT, and CTO teams.</p>
+          <p><strong>Email:</strong> <a href="mailto:zach@skydataservice.com">zach@skydataservice.com</a><br><strong>Phone:</strong> <a href="tel:+10000000000">+1 (000) 000-0000</a><br><span>Response SLA: within 1 business day</span></p>
+        </div>
+        <div>
+          <h4>Services</h4>
+          <ul>
+            <li><a href="crm-development.html">CRM Development</a></li>
+            <li><a href="integrations.html">Integrations</a></li>
+            <li><a href="services.html">Data Migration</a></li>
+            <li><a href="services.html">RevOps Automation</a></li>
+            <li><a href="services.html">Analytics</a></li>
+            <li><a href="services.html">Managed Support</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Industries</h4>
+          <ul>
+            <li>SaaS</li>
+            <li>Financial Services</li>
+            <li>Healthcare</li>
+            <li>Manufacturing</li>
+            <li>Professional Services</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="case-studies.html">Case Studies</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms</a></li>
+            <li><a href="sitemap.xml">Sitemap</a></li>
+            <li><a href="https://www.linkedin.com" rel="noopener" target="_blank">LinkedIn</a></li>
+            <li><a href="https://x.com" rel="noopener" target="_blank">X</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <span data-year></span> Sky Data Services. All rights reserved.</span>
+        <span>Engineering-first CRM and integration delivery.</span>
       </div>
     </div>
-  </section>
-
-  <section class="section" style="background-color:#f1f5f9;">
-    <h2>Our Story</h2>
-    <p style="max-width:800px; margin:0 auto; color:#374151; text-align:center;">We bring deep expertise across data science, engineering and strategy. We help startups and established organizations navigate complex data challenges and implement AI solutions. As technology continues to evolve, we remain at the forefront by continuously investing in research, partnerships and talent development.</p>
-  </section>
-
-  <footer>
-    <p>&copy; <span id="year"></span> Sky Data Services. All rights reserved.</p>
   </footer>
-  </main>
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+
+  <div class="mobile-sticky-cta" data-mobile-sticky>
+    <a class="btn btn-primary" href="contact.html#intake-form" data-track="cta_click_primary">Book a Discovery Call</a>
+    <a class="btn btn-secondary" href="contact.html#audit-form" data-track="cta_click_secondary">Get Audit</a>
+  </div>
+
+  <script src="script.js" defer></script>
 </body>
 </html>

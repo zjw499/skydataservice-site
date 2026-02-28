@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CRM &amp; RevOps Engineering Services | Sky Data Services</title>
-  <meta name="description" content="CRM implementation, integration engineering, data migration, RevOps automation, analytics, and managed enhancements.">
-  <link rel="canonical" href="https://www.skydataservice.com/services.html">
+  <title>CRM Integration Case Studies | Sky Data Services</title>
+  <meta name="description" content="See measurable outcomes from Salesforce, HubSpot, and custom CRM integration projects across industries.">
+  <link rel="canonical" href="https://www.skydataservice.com/case-studies.html">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="CRM &amp; RevOps Engineering Services | Sky Data Services">
-  <meta property="og:description" content="CRM implementation, integration engineering, data migration, RevOps automation, analytics, and managed enhancements.">
-  <meta property="og:url" content="https://www.skydataservice.com/services.html">
+  <meta property="og:title" content="CRM Integration Case Studies | Sky Data Services">
+  <meta property="og:description" content="Measurable outcomes from CRM and integration delivery across industries.">
+  <meta property="og:url" content="https://www.skydataservice.com/case-studies.html">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,16 +22,9 @@
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "ItemList",
-        "name": "Sky Data Services Offerings",
-        "itemListElement": [
-          {"@type": "Service", "name": "CRM Implementation and Optimization"},
-          {"@type": "Service", "name": "Integration Engineering"},
-          {"@type": "Service", "name": "Data Migration and Cleanup"},
-          {"@type": "Service", "name": "RevOps Automation"},
-          {"@type": "Service", "name": "Analytics and Reporting"},
-          {"@type": "Service", "name": "Ongoing Support and Managed Enhancements"}
-        ]
+        "@type": "CollectionPage",
+        "name": "CRM and Integration Case Studies",
+        "url": "https://www.skydataservice.com/case-studies.html"
       },
       {
         "@type": "BreadcrumbList",
@@ -45,8 +38,8 @@
           {
             "@type": "ListItem",
             "position": 2,
-            "name": "Services",
-            "item": "https://www.skydataservice.com/services.html"
+            "name": "Case Studies",
+            "item": "https://www.skydataservice.com/case-studies.html"
           }
         ]
       }
@@ -68,8 +61,8 @@
           <li><a href="index.html">Home</a></li>
           <li><a href="crm-development.html">CRM Development</a></li>
           <li><a href="integrations.html">Integrations</a></li>
-          <li><a href="services.html" aria-current="page">Services</a></li>
-          <li><a href="case-studies.html">Case Studies</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="case-studies.html" aria-current="page">Case Studies</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
@@ -86,8 +79,8 @@
         <li><a href="index.html" data-menu-close>Home</a></li>
         <li><a href="crm-development.html" data-menu-close>CRM Development</a></li>
         <li><a href="integrations.html" data-menu-close>Integrations</a></li>
-        <li><a href="services.html" aria-current="page" data-menu-close>Services</a></li>
-        <li><a href="case-studies.html" data-menu-close>Case Studies</a></li>
+        <li><a href="services.html" data-menu-close>Services</a></li>
+        <li><a href="case-studies.html" aria-current="page" data-menu-close>Case Studies</a></li>
         <li><a href="about.html" data-menu-close>About</a></li>
         <li><a href="contact.html" data-menu-close>Contact</a></li>
       </ul>
@@ -99,21 +92,17 @@
     <section class="hero mesh">
       <div class="container hero-grid">
         <div class="hero-copy" data-reveal>
-          <span class="eyebrow">Services</span>
-          <h1>Services Built for Revenue System Reliability</h1>
-          <p>Targeted engineering services for CRM implementation, integration, data quality, and ongoing optimization.</p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="contact.html#intake-form" data-track="cta_click_primary" data-label="Services Hero Discovery">Book a Discovery Call</a>
-            <a class="btn btn-secondary" href="contact.html#audit-form" data-track="cta_click_secondary" data-label="Services Hero Audit">Get a CRM Integration Audit</a>
-          </div>
+          <span class="eyebrow">Case Studies</span>
+          <h1>CRM and Integration Case Studies</h1>
+          <p>Real engineering outcomes across CRM platforms, integration patterns, and industries.</p>
         </div>
         <aside class="hero-panel" data-reveal data-delay="1">
-          <h3>Outcomes first</h3>
+          <h3>Case template includes</h3>
           <ul class="simple-list">
-            <li>Faster cycle times</li>
-            <li>Cleaner pipeline data</li>
-            <li>Fewer manual touches</li>
-            <li>Single source of truth reporting</li>
+            <li>Problem and approach</li>
+            <li>Stack and timeline</li>
+            <li>Measured results and quote</li>
+            <li>Clear next-step CTA</li>
           </ul>
         </aside>
       </div>
@@ -121,53 +110,84 @@
 
     <section class="section">
       <div class="container">
-        <div class="section-header center" data-reveal>
-          <h2>Service Offerings</h2>
+        <div class="section-header" data-reveal>
+          <h2>Filter by Platform, Integration Type, and Industry</h2>
         </div>
-        <div class="card-grid cols-3">
-          <article class="card" data-reveal>
-            <h3>CRM Implementation &amp; Optimization</h3>
-            <p><strong>Outcome:</strong> Faster onboarding, cleaner pipelines, stronger adoption.</p>
+        <form class="filters" data-case-filters data-reveal aria-label="Case study filters">
+          <label class="sr-only" for="filter-crm">CRM Platform</label>
+          <select id="filter-crm" name="crm">
+            <option value="all">CRM Platform (All)</option>
+            <option value="salesforce">Salesforce</option>
+            <option value="hubspot">HubSpot</option>
+            <option value="custom">Custom CRM</option>
+          </select>
+          <label class="sr-only" for="filter-integration">Integration Type</label>
+          <select id="filter-integration" name="integration">
+            <option value="all">Integration Type (All)</option>
+            <option value="api">API</option>
+            <option value="middleware">Middleware</option>
+            <option value="event">Event-Based</option>
+            <option value="etl">ETL/ELT</option>
+          </select>
+          <label class="sr-only" for="filter-industry">Industry</label>
+          <select id="filter-industry" name="industry">
+            <option value="all">Industry (All)</option>
+            <option value="saas">SaaS</option>
+            <option value="financial-services">Financial Services</option>
+            <option value="healthcare">Healthcare</option>
+            <option value="services">Services</option>
+            <option value="manufacturing">Manufacturing</option>
+          </select>
+        </form>
+
+        <div class="case-grid">
+          <article class="card" data-case-card data-crm="salesforce" data-integration="api" data-industry="saas" data-reveal>
+            <span class="case-meta">Salesforce | API | SaaS</span>
+            <h3>B2B SaaS lead routing rebuild</h3>
+            <p class="metric">63% faster lead response and 38% improvement in pipeline hygiene score.</p>
+            <ul class="inline-tags">
+              <li>Lead-to-cash</li>
+              <li>RevOps automation</li>
+            </ul>
+            <div class="case-card-footer">
+              <a class="btn btn-ghost" href="case-study-b2b-saas-lead-routing.html" data-track="cta_click_secondary">View Case Study</a>
+            </div>
           </article>
-          <article class="card" data-reveal data-delay="1">
-            <h3>Integration Engineering</h3>
-            <p><strong>Outcome:</strong> Reliable system sync and fewer manual handoffs.</p>
+          <article class="card" data-case-card data-crm="hubspot" data-integration="middleware" data-industry="services" data-reveal data-delay="1">
+            <span class="case-meta">HubSpot | Middleware | Services</span>
+            <h3>Field services quote-to-cash integration</h3>
+            <p class="metric">52% reduction in manual ops handoffs and 29% faster invoicing cycle.</p>
+            <ul class="inline-tags">
+              <li>Quote-to-invoice</li>
+              <li>Workato</li>
+            </ul>
+            <div class="case-card-footer">
+              <a class="btn btn-ghost" href="case-study-field-services-quote-to-cash.html" data-track="cta_click_secondary">View Case Study</a>
+            </div>
           </article>
-          <article class="card" data-reveal data-delay="2">
-            <h3>Data Migration &amp; Cleanup</h3>
-            <p><strong>Outcome:</strong> Accurate records and trusted reporting from day one.</p>
-          </article>
-          <article class="card" data-reveal>
-            <h3>RevOps Automation</h3>
-            <p><strong>Outcome:</strong> Consistent lifecycle execution with less admin overhead.</p>
-          </article>
-          <article class="card" data-reveal data-delay="1">
-            <h3>Analytics &amp; Reporting</h3>
-            <p><strong>Outcome:</strong> Clear visibility into pipeline health and revenue performance.</p>
-          </article>
-          <article class="card" data-reveal data-delay="2">
-            <h3>Ongoing Support / Managed Enhancements</h3>
-            <p><strong>Outcome:</strong> Continuous improvement without growing internal engineering load.</p>
+          <article class="card" data-case-card data-crm="custom" data-integration="etl" data-industry="financial-services" data-reveal data-delay="2">
+            <span class="case-meta">Custom CRM | ETL/ELT | Financial Services</span>
+            <h3>Fintech CRM + billing sync</h3>
+            <p class="metric">Forecast accuracy increased from 71% to 93% after system unification.</p>
+            <ul class="inline-tags">
+              <li>Billing sync</li>
+              <li>Snowflake</li>
+            </ul>
+            <div class="case-card-footer">
+              <a class="btn btn-ghost" href="case-study-fintech-crm-billing-sync.html" data-track="cta_click_secondary">View Case Study</a>
+            </div>
           </article>
         </div>
       </div>
     </section>
 
     <section class="section compact">
-      <div class="container split">
-        <article class="card" data-reveal>
-          <h2>Engagement Models</h2>
-          <ul class="simple-list">
-            <li><strong>Focused Sprint:</strong> solve one high-impact workflow fast.</li>
-            <li><strong>Project Delivery:</strong> end-to-end implementation with milestones.</li>
-            <li><strong>Managed Enhancements:</strong> ongoing optimization and support.</li>
-          </ul>
-        </article>
-        <div class="cta-band" data-reveal data-delay="1">
-          <h2>Tell us where your process breaks, and we will map a fix.</h2>
+      <div class="container">
+        <div class="cta-band" data-reveal>
+          <h2>Want similar outcomes in your stack? Book a Discovery Call.</h2>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="contact.html#intake-form" data-track="cta_click_primary" data-label="Services CTA Discovery">Book a Discovery Call</a>
-            <a class="btn btn-secondary" href="contact.html#audit-form" data-track="cta_click_secondary" data-label="Services CTA Audit">Get a CRM Integration Audit</a>
+            <a class="btn btn-primary" href="contact.html#intake-form" data-track="cta_click_primary" data-label="Case Studies Discovery">Book a Discovery Call</a>
+            <a class="btn btn-secondary" href="contact.html#audit-form" data-track="cta_click_secondary" data-label="Case Studies Audit">Get a CRM Integration Audit</a>
           </div>
         </div>
       </div>
@@ -224,7 +244,7 @@
       </div>
       <div class="footer-bottom">
         <span>&copy; <span data-year></span> Sky Data Services. All rights reserved.</span>
-        <span>CRM implementation, integration engineering, data migration, RevOps automation.</span>
+        <span>Case studies across Salesforce, HubSpot, custom CRM, and integration engineering.</span>
       </div>
     </div>
   </footer>
