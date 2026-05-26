@@ -266,13 +266,87 @@
   function initForms() {
     var forms = document.querySelectorAll("[data-form-type]");
     if (!forms.length) return;
+    var endpoint = document.body.getAttribute("data-form-endpoint") || window.SDS_FORM_ENDPOINT || "";
+
+    function setStatus(node, message, isError) {
+      if (!node) return;
+      node.textContent = message;
+      node.classList.toggle("is-error", Boolean(isError));
+      node.classList.add("is-visible");
+    }
+
+    function clearStatus(node) {
+      if (!node) return;
+      node.classList.remove("is-visible", "is-error");
+    }
+
+    function setFieldError(field, active) {
+      if (!field) return;
+      field.setAttribute("aria-invalid", active ? "true" : "false");
+      field.classList.toggle("is-invalid", active);
+    }
+
+    function validateRequiredFields(form) {
+      var required = form.querySelectorAll("input[required], select[required], textarea[required]");
+      var hasError = false;
+
+      required.forEach(function (field) {
+        var value = String(field.value || "").trim();
+        var invalid = !value;
+        setFieldError(field, invalid);
+        if (invalid) hasError = true;
+      });
+
+      return !hasError;
+    }
+
+    function toPayload(formData, type) {
+      var fields = {};
+      formData.forEach(function (value, key) {
+        fields[key] = String(value || "").trim();
+      });
+
+      return {
+        formType: type,
+        pageUrl: window.location.href,
+        submittedAt: new Date().toISOString(),
+        fields: fields
+      };
+    }
+
+    async function submitToEndpoint(payload) {
+      if (!endpoint) return false;
+      try {
+        var response = await fetch(endpoint, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        return response.ok;
+      } catch (err) {
+        return false;
+      }
+    }
 
     forms.forEach(function (form) {
-      form.addEventListener("submit", function (event) {
+      form.addEventListener("submit", async function (event) {
         event.preventDefault();
+        var isValid = validateRequiredFields(form);
+        var success = form.parentElement.querySelector(".form-success");
+        var submitButton = form.querySelector("button[type='submit']");
+
+        clearStatus(success);
+        if (!isValid) {
+          setStatus(success, "Please complete all required fields before submitting.", true);
+          return;
+        }
 
         var formData = new FormData(form);
         var type = form.getAttribute("data-form-type");
+        var payload = toPayload(formData, type);
         var subjectPrefix = type === "audit" ? "CRM Integration Audit Request" : "Discovery Call Request";
         var subject = subjectPrefix + " - " + (formData.get("name") || "Unknown");
 
@@ -281,19 +355,45 @@
           lines.push(key + ": " + String(value || "").trim());
         });
 
+        if (submitButton) submitButton.disabled = true;
+        var posted = await submitToEndpoint(payload);
+        if (submitButton) submitButton.disabled = false;
+
+        if (posted) {
+          setStatus(
+            success,
+            type === "audit"
+              ? "Thanks. Your CRM integration audit request was submitted."
+              : "Thanks. Your discovery request was submitted.",
+            false
+          );
+
+          trackEvent(type === "audit" ? "form_submit_audit" : "form_submit_contact", {
+            form: type
+          });
+
+          form.reset();
+          form.querySelectorAll("[aria-invalid='true']").forEach(function (field) {
+            setFieldError(field, false);
+          });
+          return;
+        }
+
         var mailto =
           "mailto:zach@skydataservice.com?subject=" +
           encodeURIComponent(subject) +
           "&body=" +
           encodeURIComponent(lines.join("\n"));
 
-        var success = form.parentElement.querySelector(".form-success");
-        if (success) {
-          success.classList.add("is-visible");
-        }
+        setStatus(
+          success,
+          "We could not submit automatically. Your email app will open so you can send the request now.",
+          true
+        );
 
         trackEvent(type === "audit" ? "form_submit_audit" : "form_submit_contact", {
-          form: type
+          form: type,
+          delivery: "mailto_fallback"
         });
 
         window.location.href = mailto;

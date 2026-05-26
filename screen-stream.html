@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkyDev Screen Stream</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Private live viewer for a screen stream published from a local machine.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Manrope:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0e1930;
+      --panel: rgba(10, 23, 43, 0.82);
+      --panel-border: rgba(148, 163, 184, 0.18);
+      --text: #eff6ff;
+      --muted: #9fb5d1;
+      --accent: #73e0c1;
+      --accent-strong: #0fb493;
+      --danger: #ff7b72;
+      --shadow: 0 24px 90px rgba(0, 0, 0, 0.38);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Manrope", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(15, 180, 147, 0.2), transparent 34%),
+        radial-gradient(circle at top right, rgba(73, 114, 255, 0.16), transparent 28%),
+        linear-gradient(160deg, #030914 0%, #07111f 42%, #0a1528 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(115, 224, 193, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(115, 224, 193, 0.04) 1px, transparent 1px);
+      background-size: 72px 72px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 88%);
+    }
+
+    .shell {
+      width: min(1400px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 32px 0 48px;
+    }
+
+    .topbar {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+      align-items: stretch;
+      margin-bottom: 24px;
+    }
+
+    .hero,
+    .control-card,
+    .empty-state,
+    .display-card {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero {
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -10% -35% 35%;
+      height: 220px;
+      background: radial-gradient(circle, rgba(15, 180, 147, 0.24), transparent 70%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.84rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--muted);
+      box-shadow: 0 0 0 0 rgba(115, 224, 193, 0.45);
+    }
+
+    .status-dot.live {
+      background: var(--accent);
+      animation: pulse 1.8s infinite;
+    }
+
+    .status-dot.error {
+      background: var(--danger);
+      box-shadow: none;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(115, 224, 193, 0.42); }
+      70% { box-shadow: 0 0 0 14px rgba(115, 224, 193, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(115, 224, 193, 0); }
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-family: "Sora", sans-serif;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.05;
+    }
+
+    .hero p,
+    .control-card p,
+    .empty-state p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .meta-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(8, 17, 33, 0.56);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+      color: var(--text);
+      font-size: 0.95rem;
+    }
+
+    .control-card {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .control-card h2 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+      font-family: "Sora", sans-serif;
+    }
+
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 12px 18px;
+      font: inherit;
+      font-weight: 700;
+      transition: transform 0.18s ease, opacity 0.18s ease, background 0.18s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #02231d;
+    }
+
+    .btn-secondary {
+      background: rgba(148, 163, 184, 0.12);
+      color: var(--text);
+      border: 1px solid rgba(148, 163, 184, 0.16);
+    }
+
+    .viewer-link {
+      display: inline-block;
+      margin-top: 8px;
+      color: var(--accent);
+      text-decoration: none;
+      word-break: break-all;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 0.86rem;
+    }
+
+    .display-grid {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      align-items: start;
+    }
+
+    .empty-state {
+      padding: 30px;
+      text-align: center;
+    }
+
+    .empty-state strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1.08rem;
+      font-family: "Sora", sans-serif;
+    }
+
+    .display-card {
+      overflow: hidden;
+    }
+
+    .display-card header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 18px 20px 14px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+    }
+
+    .display-card h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-family: "Sora", sans-serif;
+    }
+
+    .display-card .caption {
+      color: var(--muted);
+      font-size: 0.84rem;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    .display-frame {
+      aspect-ratio: 16 / 10;
+      background:
+        linear-gradient(135deg, rgba(148, 163, 184, 0.08), rgba(15, 180, 147, 0.08)),
+        linear-gradient(180deg, rgba(7, 17, 31, 0.88), rgba(4, 10, 19, 1));
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .display-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #020812;
+      display: block;
+    }
+
+    .display-frame span {
+      padding: 0 18px;
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .display-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 20px 18px;
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-family: "JetBrains Mono", monospace;
+    }
+
+    @media (max-width: 960px) {
+      .shell {
+        width: min(100vw - 20px, 100%);
+      }
+
+      .topbar {
+        grid-template-columns: 1fr;
+      }
+
+      .hero,
+      .control-card,
+      .empty-state,
+      .display-card {
+        border-radius: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <section class="topbar">
+      <article class="hero">
+        <div class="eyebrow">
+          <span class="status-dot" id="status-dot" aria-hidden="true"></span>
+          <span id="status-text">Waiting for viewer key</span>
+        </div>
+        <h1>Screen wall on demand.</h1>
+        <p id="status-detail">Open this page with your viewer key in the hash and it will render the latest active stream from your machine.</p>
+        <div class="meta-row">
+          <span class="meta-pill" id="machine-pill">Machine: --</span>
+          <span class="meta-pill" id="session-pill">Session: --</span>
+          <span class="meta-pill" id="updated-pill">Last update: --</span>
+        </div>
+      </article>
+
+      <aside class="control-card">
+        <div>
+          <h2>Viewer Access</h2>
+          <p>The page reads the viewer key from the URL hash, for example <code>#key=your-secret</code>. The hash stays in the browser and is not sent as a query string.</p>
+          <a class="viewer-link" id="viewer-link" href="#">screen-stream.html</a>
+        </div>
+        <div class="button-row">
+          <button class="btn-primary" id="enter-key" type="button">Set Viewer Key</button>
+          <button class="btn-secondary" id="refresh-now" type="button">Refresh Now</button>
+        </div>
+      </aside>
+    </section>
+
+    <section id="display-grid" class="display-grid" aria-live="polite">
+      <article class="empty-state" id="empty-state">
+        <strong>No active stream</strong>
+        <p>Run the local capture script to publish your monitors. This page will start updating automatically as soon as frames arrive.</p>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+
+      var POLL_ACTIVE_MS = 1200;
+      var POLL_IDLE_MS = 2800;
+      var viewerKey = readViewerKey();
+      var refreshTimer = null;
+      var stateDot = document.getElementById("status-dot");
+      var statusText = document.getElementById("status-text");
+      var statusDetail = document.getElementById("status-detail");
+      var machinePill = document.getElementById("machine-pill");
+      var sessionPill = document.getElementById("session-pill");
+      var updatedPill = document.getElementById("updated-pill");
+      var emptyState = document.getElementById("empty-state");
+      var displayGrid = document.getElementById("display-grid");
+      var viewerLink = document.getElementById("viewer-link");
+      var cards = new Map();
+
+      function updateViewerLink() {
+        var base = window.location.origin + window.location.pathname;
+        viewerLink.href = viewerKey ? base + "#key=" + encodeURIComponent(viewerKey) : base;
+        viewerLink.textContent = viewerLink.href;
+      }
+
+      function readViewerKey() {
+        var raw = window.location.hash.replace(/^#/, "");
+        if (!raw) return "";
+        if (raw.indexOf("=") === -1) return decodeURIComponent(raw);
+        var params = new URLSearchParams(raw);
+        return params.get("key") || "";
+      }
+
+      function writeViewerKey(value) {
+        viewerKey = String(value || "").trim();
+        var nextHash = viewerKey ? "#key=" + encodeURIComponent(viewerKey) : "";
+        window.history.replaceState(null, "", window.location.pathname + nextHash);
+        updateViewerLink();
+      }
+
+      function promptForViewerKey() {
+        var next = window.prompt("Enter the screen stream viewer key", viewerKey || "");
+        if (next === null) return;
+        writeViewerKey(next);
+        refreshState();
+      }
+
+      function authHeaders() {
+        return viewerKey ? { "x-screen-stream-view-key": viewerKey } : {};
+      }
+
+      function setStatus(kind, title, detail) {
+        stateDot.classList.remove("live", "error");
+        if (kind === "live") stateDot.classList.add("live");
+        if (kind === "error") stateDot.classList.add("error");
+        statusText.textContent = title;
+        statusDetail.textContent = detail;
+      }
+
+      function formatStamp(value) {
+        if (!value) return "--";
+        var date = new Date(value);
+        if (Number.isNaN(date.getTime())) return "--";
+        return date.toLocaleString();
+      }
+
+      function clearCards() {
+        cards.forEach(function (card) {
+          if (card.objectUrl) {
+            URL.revokeObjectURL(card.objectUrl);
+          }
+          card.root.remove();
+        });
+        cards.clear();
+      }
+
+      function ensureCard(display) {
+        var existing = cards.get(display.id);
+        if (existing) return existing;
+
+        var root = document.createElement("article");
+        root.className = "display-card";
+        root.innerHTML =
+          '<header>' +
+            '<div>' +
+              '<h3></h3>' +
+              '<div class="caption"></div>' +
+            '</div>' +
+            '<span class="meta-pill"></span>' +
+          '</header>' +
+          '<div class="display-frame"><span>Waiting for first frame...</span></div>' +
+          '<div class="display-footer">' +
+            '<span class="resolution"></span>' +
+            '<span class="timestamp">--</span>' +
+          '</div>';
+
+        displayGrid.appendChild(root);
+        var card = {
+          root: root,
+          title: root.querySelector("h3"),
+          caption: root.querySelector(".caption"),
+          badge: root.querySelector(".meta-pill"),
+          frame: root.querySelector(".display-frame"),
+          resolution: root.querySelector(".resolution"),
+          timestamp: root.querySelector(".timestamp"),
+          pathname: "",
+          objectUrl: "",
+        };
+
+        cards.set(display.id, card);
+        return card;
+      }
+
+      async function loadFrame(display, card) {
+        if (!display.pathname || card.pathname === display.pathname) return;
+
+        var response = await fetch("/api/screen-stream-frame?pathname=" + encodeURIComponent(display.pathname), {
+          headers: authHeaders(),
+          cache: "no-store",
+        });
+
+        if (response.status === 401) {
+          throw new Error("unauthorized");
+        }
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch frame");
+        }
+
+        var blob = await response.blob();
+        var objectUrl = URL.createObjectURL(blob);
+        var img = card.frame.querySelector("img");
+        if (!img) {
+          img = document.createElement("img");
+          img.alt = display.label + " live screen";
+          card.frame.innerHTML = "";
+          card.frame.appendChild(img);
+        }
+
+        img.src = objectUrl;
+        if (card.objectUrl) {
+          URL.revokeObjectURL(card.objectUrl);
+        }
+
+        card.objectUrl = objectUrl;
+        card.pathname = display.pathname;
+      }
+
+      async function renderDisplays(payload) {
+        if (!payload.active || !payload.displays.length) {
+          clearCards();
+          emptyState.hidden = false;
+          return;
+        }
+
+        emptyState.hidden = true;
+
+        var activeIds = {};
+        for (var i = 0; i < payload.displays.length; i += 1) {
+          var display = payload.displays[i];
+          activeIds[display.id] = true;
+
+          var card = ensureCard(display);
+          card.title.textContent = display.label;
+          card.caption.textContent = (display.primary ? "Primary monitor" : "Secondary monitor") + " | " + display.id;
+          card.badge.textContent = display.primary ? "Primary" : "Live";
+          card.resolution.textContent = display.width + "x" + display.height + " px";
+          card.timestamp.textContent = formatStamp(display.uploadedAt);
+
+          await loadFrame(display, card);
+        }
+
+        cards.forEach(function (card, key) {
+          if (!activeIds[key]) {
+            if (card.objectUrl) URL.revokeObjectURL(card.objectUrl);
+            card.root.remove();
+            cards.delete(key);
+          }
+        });
+      }
+
+      async function refreshState() {
+        if (refreshTimer) {
+          window.clearTimeout(refreshTimer);
+          refreshTimer = null;
+        }
+
+        if (!viewerKey) {
+          setStatus("idle", "Viewer key required", "Set the viewer key to load the private stream API.");
+          machinePill.textContent = "Machine: --";
+          sessionPill.textContent = "Session: --";
+          updatedPill.textContent = "Last update: --";
+          clearCards();
+          emptyState.hidden = false;
+          updateViewerLink();
+          refreshTimer = window.setTimeout(refreshState, POLL_IDLE_MS);
+          return;
+        }
+
+        updateViewerLink();
+
+        try {
+          var response = await fetch("/api/screen-stream-state", {
+            headers: authHeaders(),
+            cache: "no-store",
+          });
+
+          if (response.status === 401) {
+            setStatus("error", "Viewer key rejected", "The configured viewer key was not accepted by the API.");
+            refreshTimer = window.setTimeout(refreshState, POLL_IDLE_MS);
+            return;
+          }
+
+          if (!response.ok) {
+            throw new Error("State request failed");
+          }
+
+          var payload = await response.json();
+
+          machinePill.textContent = "Machine: " + (payload.machineName || "--");
+          sessionPill.textContent = "Session: " + (payload.sessionId || "--");
+          updatedPill.textContent = "Last update: " + formatStamp(payload.lastSeenAt);
+
+          if (payload.active) {
+            setStatus("live", "Live stream active", "Frames are updating from the latest active session.");
+          } else {
+            setStatus("idle", "No active stream", "The viewer is connected, but no live session is currently publishing frames.");
+          }
+
+          await renderDisplays(payload);
+          refreshTimer = window.setTimeout(refreshState, payload.active ? POLL_ACTIVE_MS : POLL_IDLE_MS);
+        } catch (_err) {
+          setStatus("error", "Viewer unreachable", "The page could not reach the stream API. It will retry automatically.");
+          refreshTimer = window.setTimeout(refreshState, POLL_IDLE_MS);
+        }
+      }
+
+      document.getElementById("enter-key").addEventListener("click", promptForViewerKey);
+      document.getElementById("refresh-now").addEventListener("click", refreshState);
+      window.addEventListener("hashchange", function () {
+        viewerKey = readViewerKey();
+        refreshState();
+      });
+
+      updateViewerLink();
+      refreshState();
+    })();
+  </script>
+</body>
+</html>

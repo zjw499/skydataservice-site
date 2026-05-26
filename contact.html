@@ -5,13 +5,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Book a Discovery Call | Sky Data Services</title>
-  <meta name="description" content="Contact Sky Data Services to discuss CRM development, integrations, and RevOps automation. Get a response within one business day.">
+  <meta name="description" content="Book a discovery call for AI-enabled CRM operations, Salesforce workflow apps, Microsoft and OpenAI automation, integrations, and dashboards.">
   <link rel="canonical" href="https://www.skydataservice.com/contact.html">
   <meta property="og:type" content="website">
   <meta property="og:title" content="Book a Discovery Call | Sky Data Services">
-  <meta property="og:description" content="Tell us your CRM and integration goals and receive next steps within one business day.">
+  <meta property="og:description" content="Tell us where your CRM, AI, Microsoft, integration, or reporting workflow breaks and get a clear next-step plan.">
   <meta property="og:url" content="https://www.skydataservice.com/contact.html">
   <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Book a Discovery Call | Sky Data Services">
+  <meta name="twitter:description" content="Tell us where your CRM, AI, Microsoft, integration, or reporting workflow breaks and get a clear next-step plan.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Manrope:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
@@ -58,7 +60,7 @@
   }
   </script>
 </head>
-<body data-mobile-cta="off">
+<body data-mobile-cta="off" data-form-endpoint="/api/intake">
   <a class="skip-link" href="#main">Skip to content</a>
 
   <header class="site-header" role="banner">
@@ -105,14 +107,14 @@
         <div class="hero-copy" data-reveal>
           <span class="eyebrow">Contact</span>
           <h1>Book a Discovery Call</h1>
-          <p>Tell us your CRM and integration goals. We will reply within one business day with next steps.</p>
+          <p>Tell us what is slowing your team down across CRM, AI, Microsoft tools, integrations, reporting, or adoption. We will reply within one business day with a clear next-step plan.</p>
         </div>
         <aside class="hero-panel" data-reveal data-delay="1">
           <h3>What happens next</h3>
           <ol class="steps">
-            <li>We review your intake and current stack.</li>
-            <li>You receive a scoped discovery agenda.</li>
-            <li>We deliver a technical action plan with priorities.</li>
+            <li>We review your CRM setup, Microsoft tools, AI opportunities, and current pain points.</li>
+            <li>You get a focused agenda for the first call.</li>
+            <li>We send a practical action plan with workflow, integration, and adoption priorities.</li>
           </ol>
         </aside>
       </div>
@@ -123,10 +125,11 @@
         <div data-reveal>
           <div class="section-header">
             <h2>Discovery Intake</h2>
-            <p>Share your requirements and constraints so we can run a focused first call.</p>
+            <p>Share your goals, systems, and timeline for an AI-enabled operations workflow, CRM rebuild, integration, or reporting improvement.</p>
           </div>
           <form data-form-type="contact" novalidate>
             <div class="form-grid">
+              <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
               <div class="form-group">
                 <label for="name">Name</label>
                 <input id="name" name="name" type="text" required>
@@ -154,10 +157,11 @@
                 <label for="primary_challenge">Primary Challenge</label>
                 <select id="primary_challenge" name="primary_challenge" required>
                   <option value="">Select one</option>
-                  <option>Data quality and migration</option>
+                  <option>AI-enabled operations workflow</option>
+                  <option>Salesforce workflow rebuild</option>
+                  <option>Microsoft/OpenAI automation</option>
                   <option>Integration reliability</option>
-                  <option>RevOps automation</option>
-                  <option>Reporting and forecasting</option>
+                  <option>Reporting dashboards and adoption</option>
                 </select>
               </div>
               <div class="form-group">
@@ -171,23 +175,24 @@
               </div>
               <div class="form-group full">
                 <label for="message">Message</label>
-                <textarea id="message" name="message" placeholder="What systems are involved and what is currently breaking?" required></textarea>
+                <textarea id="message" name="message" placeholder="What workflow is breaking, what systems are involved, and where users lose context?" required></textarea>
               </div>
               <div class="form-actions">
                 <button type="submit" class="btn btn-primary" data-track="cta_click_primary" data-label="Contact Submit">Submit Discovery Request</button>
               </div>
             </div>
           </form>
-          <p class="form-success" role="status" aria-live="polite">Thanks. Your email draft opened so you can send us the full intake details.</p>
+          <p class="form-success" role="status" aria-live="polite">Thanks. Your request was submitted.</p>
         </div>
 
         <aside data-reveal data-delay="1">
           <div class="section-header" id="audit-form">
             <h2>Get a CRM Integration Audit</h2>
-            <p>Share your system stack and top failure points; receive a short integration risk assessment.</p>
+            <p>Share your systems and top issues to receive a short CRM, Microsoft, OpenAI, and integration risk assessment.</p>
           </div>
           <form data-form-type="audit" novalidate>
             <div class="form-grid">
+              <input type="text" name="website" class="hp-field" tabindex="-1" autocomplete="off" aria-hidden="true">
               <div class="form-group full">
                 <label for="audit_name">Name</label>
                 <input id="audit_name" name="name" type="text" required>
@@ -198,22 +203,22 @@
               </div>
               <div class="form-group full">
                 <label for="systems">Systems in scope</label>
-                <input id="systems" name="systems" type="text" placeholder="Example: HubSpot, NetSuite, Stripe, Snowflake" required>
+                <input id="systems" name="systems" type="text" placeholder="Example: Salesforce, SharePoint, Outlook, OpenAI, Notion" required>
               </div>
               <div class="form-group full">
                 <label for="failure_points">Top failure points</label>
-                <textarea id="failure_points" name="failure_points" required></textarea>
+                <textarea id="failure_points" name="failure_points" placeholder="Where do handoffs fail, feedback lose context, or reports stop being trusted?" required></textarea>
               </div>
               <div class="form-actions">
                 <button type="submit" class="btn btn-secondary" data-track="cta_click_secondary" data-label="Audit Submit">Request Audit</button>
               </div>
             </div>
           </form>
-          <p class="form-success" role="status" aria-live="polite">Thanks. Your audit request email draft opened with your details.</p>
+          <p class="form-success" role="status" aria-live="polite">Thanks. Your audit request was submitted.</p>
 
           <div class="placeholder-embed" data-reveal data-delay="2">
-            <h3>Scheduler Embed Placeholder</h3>
-            <p>Optional future upgrade: replace with Calendly, HubSpot Meetings, or Salesforce scheduler embed.</p>
+            <h3>Call Scheduling</h3>
+            <p>After intake, we send a focused agenda and scheduling options for the first discovery call.</p>
           </div>
         </aside>
       </div>
@@ -225,7 +230,7 @@
       <div class="footer-grid">
         <div>
           <h3>Sky Data Services</h3>
-          <p>Engineering-first CRM development and integration delivery for RevOps, Sales Ops, IT, and CTO teams.</p>
+          <p>AI-enabled CRM operations, Salesforce workflow apps, integrations, dashboards, and adoption support for growing teams across the U.S.</p>
           <p><strong>Email:</strong> <a href="mailto:zach@skydataservice.com">zach@skydataservice.com</a><br><strong>Phone:</strong> <a href="tel:+10000000000">+1 (000) 000-0000</a><br><span>Response SLA: within 1 business day</span></p>
         </div>
         <div>
@@ -234,8 +239,8 @@
             <li><a href="crm-development.html">CRM Development</a></li>
             <li><a href="integrations.html">Integrations</a></li>
             <li><a href="services.html">Data Migration</a></li>
-            <li><a href="services.html">RevOps Automation</a></li>
-            <li><a href="services.html">Analytics</a></li>
+            <li><a href="services.html">AI Operations Automation</a></li>
+            <li><a href="services.html">Dashboards</a></li>
             <li><a href="services.html">Managed Support</a></li>
           </ul>
         </div>
@@ -244,7 +249,7 @@
           <ul>
             <li>SaaS</li>
             <li>Financial Services</li>
-            <li>Healthcare</li>
+            <li>Healthcare Operations</li>
             <li>Manufacturing</li>
             <li>Professional Services</li>
           </ul>
@@ -263,14 +268,12 @@
             <li><a href="privacy.html">Privacy Policy</a></li>
             <li><a href="terms.html">Terms</a></li>
             <li><a href="sitemap.xml">Sitemap</a></li>
-            <li><a href="https://www.linkedin.com" rel="noopener" target="_blank">LinkedIn</a></li>
-            <li><a href="https://x.com" rel="noopener" target="_blank">X</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <span>&copy; <span data-year></span> Sky Data Services. All rights reserved.</span>
-        <span>CRM development and integration discovery for national teams.</span>
+        <span>CRM, AI operations, Microsoft automation, integration, and dashboard discovery.</span>
       </div>
     </div>
   </footer>

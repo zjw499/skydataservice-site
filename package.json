@@ -1,0 +1,12 @@
+{
+  "name": "skydataservice-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Sky Data Services Vercel deployment",
+  "scripts": {
+    "vercel:pull": "vercel env pull .env.local"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.0.0"
+  }
+}

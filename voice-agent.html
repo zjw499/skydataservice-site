@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sky Data Voice Agent</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Dataset-grounded voice agent launcher for Sky Data Services.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --panel: rgba(255, 252, 246, 0.86);
+      --panel-strong: rgba(255, 255, 255, 0.94);
+      --border: rgba(91, 74, 58, 0.14);
+      --text: #231913;
+      --muted: #6d5a4c;
+      --accent: #d2601a;
+      --accent-soft: #ffd7bf;
+      --danger: #b3261e;
+      --shadow: 0 28px 70px rgba(58, 34, 12, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "IBM Plex Sans", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(210, 96, 26, 0.18), transparent 28%),
+        radial-gradient(circle at top right, rgba(106, 178, 229, 0.18), transparent 22%),
+        linear-gradient(180deg, #efe4d0 0%, #f8f4eb 48%, #f1ebdf 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(35, 25, 19, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(35, 25, 19, 0.04) 1px, transparent 1px);
+      background-size: 72px 72px;
+      opacity: 0.3;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 84%);
+    }
+
+    main {
+      width: min(980px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+
+    .hero,
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: var(--panel);
+      backdrop-filter: blur(16px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 28px;
+      margin-bottom: 18px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -40px;
+      top: -40px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(210, 96, 26, 0.18), transparent 68%);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .pulse {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(109, 90, 76, 0.55);
+      box-shadow: 0 0 0 0 rgba(210, 96, 26, 0.35);
+    }
+
+    .pulse.live {
+      background: var(--accent);
+      animation: pulse 1.7s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(210, 96, 26, 0.33); }
+      70% { box-shadow: 0 0 0 14px rgba(210, 96, 26, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(210, 96, 26, 0); }
+    }
+
+    h1,
+    h2 {
+      font-family: "Space Grotesk", sans-serif;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 0.98;
+      max-width: 12ch;
+      margin-bottom: 14px;
+    }
+
+    p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 18px;
+    }
+
+    .panel {
+      padding: 22px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid rgba(91, 74, 58, 0.18);
+      border-radius: 16px;
+      background: var(--panel-strong);
+      color: var(--text);
+      font: inherit;
+      padding: 14px 16px;
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: rgba(210, 96, 26, 0.45);
+      box-shadow: 0 0 0 4px rgba(210, 96, 26, 0.12);
+    }
+
+    .button-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    button {
+      appearance: none;
+      border: none;
+      border-radius: 999px;
+      padding: 13px 18px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s ease, opacity 0.18s ease;
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #de6d28, #c65213);
+      color: #fff8f0;
+    }
+
+    .btn-secondary {
+      background: rgba(35, 25, 19, 0.08);
+      color: var(--text);
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .meta {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(91, 74, 58, 0.14);
+      background: rgba(255, 255, 255, 0.78);
+      color: var(--text);
+      font-size: 0.92rem;
+    }
+
+    .status {
+      min-height: 24px;
+      margin-top: 16px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .status.error {
+      color: var(--danger);
+    }
+
+    .log {
+      margin-top: 18px;
+      padding: 16px;
+      min-height: 280px;
+      max-height: 420px;
+      overflow: auto;
+      border-radius: 18px;
+      border: 1px solid rgba(91, 74, 58, 0.14);
+      background: rgba(255, 255, 255, 0.76);
+    }
+
+    .entry {
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(91, 74, 58, 0.09);
+    }
+
+    .entry:last-child {
+      border-bottom: none;
+    }
+
+    .entry strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--text);
+    }
+
+    .helper-list {
+      margin-top: 14px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .helper-list div {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(91, 74, 58, 0.1);
+      color: var(--muted);
+    }
+
+    code {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.92em;
+    }
+
+    @media (max-width: 820px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      main {
+        width: min(100vw - 20px, 980px);
+        padding-top: 14px;
+      }
+
+      .hero,
+      .panel {
+        border-radius: 22px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="eyebrow"><span id="pulse" class="pulse"></span>Realtime Dataset Voice</div>
+      <h1>Talk to one dataset, not your whole stack.</h1>
+      <p>
+        This page starts a grounded voice session for a previously registered dataset. It is designed to be the
+        target of an iPhone shortcut that you can expose on Apple Watch.
+      </p>
+      <div class="meta">
+        <div class="pill">Target URL: <code>/voice-agent.html?dataset=&lt;id&gt;</code></div>
+        <div class="pill">Transport: <code>WebRTC + OpenAI Realtime</code></div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="panel">
+        <h2>Launch Session</h2>
+        <p style="margin-top: 10px;">Use the dataset id from the registration endpoint. If this page was opened from a shortcut, the field should already be filled.</p>
+
+        <div style="margin-top: 18px;">
+          <label for="datasetId">Dataset ID</label>
+          <input id="datasetId" name="datasetId" autocomplete="off" placeholder="quarterly-revenue-brief">
+        </div>
+
+        <div class="button-row">
+          <button id="connectButton" class="btn-primary">Start Voice Session</button>
+          <button id="disconnectButton" class="btn-secondary" disabled>Disconnect</button>
+        </div>
+
+        <div id="status" class="status">Idle.</div>
+
+        <div class="log" id="log"></div>
+      </article>
+
+      <aside class="panel">
+        <h2>Dataset Preview</h2>
+        <p id="datasetSummary" style="margin-top: 10px;">No session loaded yet.</p>
+
+        <div class="helper-list">
+          <div>Watch shortcut path now: the watch launches this URL on your phone, then the phone microphone/speaker handles the conversation.</div>
+          <div>True watch-native audio later: use a watchOS app or a phone-call/SIP bridge instead of a browser page.</div>
+          <div>Keep the dataset concise. Voice agents work best when the critical context is already in the session prompt.</div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const datasetInput = document.getElementById("datasetId");
+    const connectButton = document.getElementById("connectButton");
+    const disconnectButton = document.getElementById("disconnectButton");
+    const statusEl = document.getElementById("status");
+    const logEl = document.getElementById("log");
+    const datasetSummaryEl = document.getElementById("datasetSummary");
+    const pulseEl = document.getElementById("pulse");
+
+    const params = new URLSearchParams(window.location.search);
+    const initialDataset = params.get("dataset") || params.get("datasetId") || "";
+    if (initialDataset) {
+      datasetInput.value = initialDataset;
+    }
+
+    let peerConnection = null;
+    let dataChannel = null;
+    let localStream = null;
+    let remoteAudio = null;
+    let assistantDraft = "";
+
+    function setStatus(message, isError = false) {
+      statusEl.textContent = message;
+      statusEl.classList.toggle("error", Boolean(isError));
+    }
+
+    function logEntry(role, message) {
+      const entry = document.createElement("div");
+      entry.className = "entry";
+
+      const title = document.createElement("strong");
+      title.textContent = role;
+
+      const body = document.createElement("div");
+      body.textContent = message;
+
+      entry.append(title, body);
+      logEl.prepend(entry);
+    }
+
+    function resetConnectionState() {
+      if (dataChannel) {
+        try {
+          dataChannel.close();
+        } catch (_err) {}
+      }
+
+      if (peerConnection) {
+        try {
+          peerConnection.close();
+        } catch (_err) {}
+      }
+
+      if (localStream) {
+        localStream.getTracks().forEach((track) => track.stop());
+      }
+
+      if (remoteAudio) {
+        remoteAudio.srcObject = null;
+      }
+
+      peerConnection = null;
+      dataChannel = null;
+      localStream = null;
+      assistantDraft = "";
+      connectButton.disabled = false;
+      disconnectButton.disabled = true;
+      pulseEl.classList.remove("live");
+    }
+
+    function bindDataChannel(channel) {
+      channel.addEventListener("open", () => {
+        setStatus("Connected. Start talking.");
+        logEntry("Session", "Realtime channel open. Start speaking about the dataset.");
+      });
+
+      channel.addEventListener("close", () => {
+        setStatus("Disconnected.");
+        resetConnectionState();
+      });
+
+      channel.addEventListener("message", (event) => {
+        let payload;
+        try {
+          payload = JSON.parse(event.data);
+        } catch (_err) {
+          return;
+        }
+
+        const type = payload && payload.type ? payload.type : "";
+
+        if (type === "error") {
+          const message = payload.error && payload.error.message ? payload.error.message : "Realtime error";
+          setStatus(message, true);
+          logEntry("Error", message);
+          return;
+        }
+
+        if (type === "response.audio_transcript.delta" && typeof payload.delta === "string") {
+          assistantDraft += payload.delta;
+          return;
+        }
+
+        if (type === "response.audio_transcript.done") {
+          const message = assistantDraft || payload.transcript || "Assistant spoke.";
+          assistantDraft = "";
+          logEntry("Agent", message);
+          return;
+        }
+
+        if (type === "conversation.item.input_audio_transcription.completed" && payload.transcript) {
+          logEntry("You", payload.transcript);
+          return;
+        }
+
+        if (type === "session.created") {
+          logEntry("Session", "Session established.");
+        }
+      });
+    }
+
+    async function startVoiceSession() {
+      const datasetId = datasetInput.value.trim();
+      if (!datasetId) {
+        setStatus("Enter a dataset id first.", true);
+        return;
+      }
+
+      connectButton.disabled = true;
+      setStatus("Creating session...");
+
+      try {
+        const tokenResponse = await fetch(`/api/voice-agent-token?dataset=${encodeURIComponent(datasetId)}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const tokenData = await tokenResponse.json();
+        if (!tokenResponse.ok || !tokenData.ok) {
+          throw new Error(tokenData.error || "Token request failed");
+        }
+
+        datasetSummaryEl.textContent =
+          tokenData.dataset && tokenData.dataset.summary
+            ? tokenData.dataset.summary
+            : `Dataset "${tokenData.dataset.title}" loaded.`;
+
+        const ephemeralKey = tokenData.clientSecret;
+        if (!ephemeralKey) {
+          throw new Error("Token response did not include a client secret");
+        }
+
+        remoteAudio = new Audio();
+        remoteAudio.autoplay = true;
+
+        peerConnection = new RTCPeerConnection();
+        peerConnection.ontrack = (remoteEvent) => {
+          remoteAudio.srcObject = remoteEvent.streams[0];
+        };
+
+        dataChannel = peerConnection.createDataChannel("oai-events");
+        bindDataChannel(dataChannel);
+
+        localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        localStream.getTracks().forEach((track) => peerConnection.addTrack(track, localStream));
+
+        const offer = await peerConnection.createOffer();
+        await peerConnection.setLocalDescription(offer);
+
+        const sdpResponse = await fetch("https://api.openai.com/v1/realtime/calls", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${ephemeralKey}`,
+            "Content-Type": "application/sdp",
+          },
+          body: offer.sdp,
+        });
+
+        if (!sdpResponse.ok) {
+          const failure = await sdpResponse.text();
+          throw new Error(`Realtime connection failed: ${failure || sdpResponse.status}`);
+        }
+
+        const answer = {
+          type: "answer",
+          sdp: await sdpResponse.text(),
+        };
+
+        await peerConnection.setRemoteDescription(answer);
+
+        disconnectButton.disabled = false;
+        pulseEl.classList.add("live");
+        setStatus("Voice session ready. Start speaking.");
+      } catch (error) {
+        resetConnectionState();
+        setStatus(error && error.message ? error.message : "Failed to start session", true);
+        logEntry("Error", error && error.message ? error.message : "Failed to start session");
+      }
+    }
+
+    connectButton.addEventListener("click", () => {
+      startVoiceSession();
+    });
+
+    disconnectButton.addEventListener("click", () => {
+      logEntry("Session", "Disconnected by user.");
+      setStatus("Disconnected.");
+      resetConnectionState();
+    });
+
+    window.addEventListener("beforeunload", () => {
+      resetConnectionState();
+    });
+
+    logEntry("Ready", "Open this page with a dataset id and start a voice session.");
+  </script>
+</body>
+</html>
