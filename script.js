@@ -380,7 +380,7 @@
         }
 
         var mailto =
-          "mailto:zach@skydataservice.com?subject=" +
+          "mailto:info@skydataservice.com?subject=" +
           encodeURIComponent(subject) +
           "&body=" +
           encodeURIComponent(lines.join("\n"));
